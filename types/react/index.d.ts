@@ -246,7 +246,17 @@ declare namespace React {
     function createElement<P extends {}>(
         type: FunctionComponent<P> | ComponentClass<P> | string,
         props?: Attributes & P | null,
-        ...children: ReactNode[]): ReactElement<P>;
+      ...children: ReactNode[]): ReactElement<P>;
+    function createElement<P extends { children: ReactNode }>(
+        type: FunctionComponent<P> | ComponentClass<P>,
+        props?: Attributes & P | null,
+    ): ReactElement<P>;
+    function createElement<P extends { children: ReactNode }>(
+        type: FunctionComponent<P> | ComponentClass<P>,
+        props: Attributes & Pick<P, Exclude<keyof P, 'children'>> | null,
+        firstChild: P['children'],
+        ...children: P['children'][]
+    ): ReactElement<P>;
 
     // DOM Elements
     // ReactHTMLElement
